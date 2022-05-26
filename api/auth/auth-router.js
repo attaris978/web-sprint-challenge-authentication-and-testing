@@ -1,12 +1,14 @@
 const router = require("express").Router();
+require('dotenv');
 const auth = require("./auth-middleware");
 const db = require("../../data/dbConfig");
 const bcrypt = require("bcryptjs");
+const iterations = process.env.HASH_ITERATIONS || 8;
 const jotItUp = require('./token');
 
 
 router.post("/register", auth.validateCreds, auth.checkUserViability, async (req, res, next) => {
-  req.body.password = bcrypt.hashSync(req.body.password, 8);
+  req.body.password = bcrypt.hashSync(req.body.password, iterations);
   try {
     const id = await db("users").insert(req.body);
     const newUser = await db("users").where({ id: id[0] });
