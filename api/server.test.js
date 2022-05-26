@@ -187,6 +187,7 @@ describe('Testing jokes endpoint', () => {
 
 describe('End-to-End testing of api', () => {
   it('Registration followed by login followed by jokes endpoint access returns jokes array', async () => {
+    db('users').truncate();
     await request(server)
     .post('/api/auth/register')
     .set("Accept", "application/json")
@@ -201,7 +202,6 @@ describe('End-to-End testing of api', () => {
     .set("authorization", response.body.token);
     expect(jokes.statusCode).toBe(200);
     expect(Array.isArray(jokes.body)).toBeTruthy();
-    expect(jokes.body.length).toBe(3);
-    db('users').truncate();
+    expect(jokes.body.length).toBe(3);    
   })
 })
