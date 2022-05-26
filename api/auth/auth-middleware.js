@@ -1,4 +1,4 @@
-const db = require("../../data/dbconfig");
+const db = require("../../data/dbConfig");
 
 const checkUserViability = async (req, res, next) => {
   const { username } = req.body;  
